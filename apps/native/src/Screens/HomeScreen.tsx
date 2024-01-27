@@ -9,6 +9,8 @@ import nameDatabase from '../database/nameDatabase'
 import { useFonts } from 'expo-font'
 import sizes from '../assets/Sizes'
 import colors from '../assets/Colors'
+import { useRoute } from '@react-navigation/native';
+
 
 type NavigationProps = {
   navigation: any,
@@ -17,6 +19,7 @@ type NavigationProps = {
 
 export default function HomeScreen(props: NavigationProps) {
   
+  const route = useRoute();
 
 const [loaded] = useFonts({
   Montserrat: require('../assets/fonts/Montserrat.ttf'),
@@ -26,6 +29,8 @@ if(!loaded){
   return null;
 }
 
+
+
   return (
     <View style={styles.container}>
         <WelcomeText name={`${nameDatabase.name}`} onPress={ () => props.navigation.navigate('MenuScreen')} />
@@ -33,6 +38,8 @@ if(!loaded){
         <Offer onPress={ () => props.navigation.navigate('TreasureScreen')} />
 
         <View style={styles.wrapper}>
+        <Text style={styles.textCategory}>{route.params.flightNumber}</Text>
+
           <Text style={styles.textCategory}>Popular Tours</Text>
           <TouchableOpacity>
               <Text style={styles.textView}>See All</Text>

@@ -14,6 +14,7 @@
     "@repo/ui": "^0.0.0",
     "expo": "^49.0.21",
     "expo-status-bar": "~1.7.0",
+    "openai": "^4.26.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.73.1",
