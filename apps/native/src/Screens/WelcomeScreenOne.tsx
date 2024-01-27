@@ -27,7 +27,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
     <View style={styles.container}>
 
         <View style={styles.pictureContainer}>
-            <Image style={styles.picture} source={require("../Images/draw.jpg")} />
+            <Image style={styles.picture} source={require("../Images/adventure.svg")} />
         </View>
     
         <Text style={styles.textMain}>Explore a New World</Text>

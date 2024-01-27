@@ -26,7 +26,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
     <View style={styles.container}>
 
         <View style={styles.pictureContainer}>
-            <Image style={styles.picture} source={require("../Images/draw2.png")} />
+            <Image style={styles.picture} source={require("../Images/plane2.svg")} />
         </View>
     
         <Text style={styles.textMain}>Enjoy Your Trip</Text>
@@ -69,6 +69,10 @@ const styles = StyleSheet.create({
     },
     picture:{
         width: '100%',
-        height: 400,
+        height: 200,
+        alignSelf: 'center',
+        // move the image down
+        marginTop: 120,
+
     },
 })
