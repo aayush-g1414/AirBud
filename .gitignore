@@ -5,6 +5,11 @@ node_modules
 .pnp
 .pnp.js
 
+# package-lock.json
+# package.json
+# tsconfig.json
+# yarn.lock
+# apps\native\package.json
 # testing
 coverage
 
