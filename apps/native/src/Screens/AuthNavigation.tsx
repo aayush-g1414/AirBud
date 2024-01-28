@@ -11,21 +11,13 @@ import MenuScreen from './MenuScreen';
 import TreasureScreen from './TreasureScreen';
 import { DefaultTheme } from '@react-navigation/native';
 import colors from '../assets/Colors';
+import { View } from 'react-native';
 
 function AuthNavigation() {
     const Stack = createNativeStackNavigator<RootStackParamList>();
 
     return (
-        <NavigationContainer theme={{
-            ...DefaultTheme,
-            colors:{
-              ...DefaultTheme.colors,
-              background: 'transparent',
-              notification: colors.greenLight,
-              
-            },
-            
-          }}>
+          
             <Stack.Navigator>
                 <Stack.Screen name="WelcomeScreenOne" component={WelcomeScreenOne} options={{headerShown: false}} />
                 <Stack.Screen name="WelcomeScreenTwo" component={WelcomeScreenTwo} options={{headerShown: false}} />
@@ -36,7 +28,6 @@ function AuthNavigation() {
                 <Stack.Screen name="MenuScreen" component={MenuScreen} options={{headerTitleAlign: 'center', headerShadowVisible: false }} />
                 <Stack.Screen name="TreasureScreen" component={TreasureScreen} options={{headerTitleAlign: 'center', headerShadowVisible: false }} />
             </Stack.Navigator>
-        </NavigationContainer>
     )
 }
 
