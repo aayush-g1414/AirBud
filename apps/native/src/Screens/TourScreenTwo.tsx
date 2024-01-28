@@ -1,139 +1,131 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-import cardInfo from '../database/cardInfoDatabase'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import colors from '../assets/Colors'
-import sizes from '../assets/Sizes'
-import { useFonts } from 'expo-font'
-import ButtonTour from '../Components/ButtonTour'
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import colors from '../assets/Colors';
+import getToKnow from '../database/gettingToKnowDatabase';
+import { Platform } from 'react-native';
 
-export default function TourScreenOne(props: any) {
-console.log(props.route.params.name)
-
-const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat.ttf'),
-})
-
-if(!loaded){
-    return null;
+interface ChatEntry {
+  question: string;
+  answer: string;
 }
+
+const questions: string[] = getToKnow.questions;
+
+export default function TourScreenOne() {
+    const [chatEntries, setChatEntries] = useState<ChatEntry[]>([
+        { question: "So, what are you waiting for? Introduce yourselves!", answer: "Remember, strangers are just friends waiting to happen :)" } // The initial question
+      ]);
+      const [inputText, setInputText] = useState<string>("");
+    
+
+  const addEntry = (answer: string): void => {
+    const randomIndex: number = Math.floor(Math.random() * questions.length);
+    const newQuestion: string = questions[randomIndex];
+    setChatEntries([...chatEntries, { question: newQuestion, answer }]);
+  };
+
+  const sendMessage = (): void => {
+    if (inputText.trim()) {
+      addEntry(inputText);
+      setInputText("");
+    }
+  };
 
   return (
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={require('../Images/caravan.jpg')} style={styles.image} />
-        </View>
+    <KeyboardAvoidingView style={styles.container}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}>
+      <FlatList
+        data={chatEntries}
+        renderItem={({ item }) => (
+          <View>
+            <Text style={styles.message}>{item.answer}</Text>
+            <Text style={styles.questionText}>{item.question}</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.messagesContainer}
+      />
 
-        <View style={styles.wrapperHeader}>
-          <Text style={styles.textHeader}>{cardInfo.names[1]}</Text>
-          <TouchableOpacity>
-              <MaterialCommunityIcons name="heart-outline" color={`${colors.greenLight}`} size={35} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.wrapper}>
-            <View style={styles.wrapperRating}>
-                <Text style={styles.textRating}>Rating</Text>
-                <View style={styles.wrapperStars}>
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star-outline" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star-outline" color={`${colors.starColor}`} size={24} />
-                </View>
-            </View>
-
-            <View>
-                <Text style={styles.textPrice}>Price</Text>
-                <Text style={styles.price}>{cardInfo.price[1]}</Text>
-            </View>
-        </View>
-
-        <View style={styles.wrapperDescription}>
-            <Text style={styles.textDescription}>Description</Text>
-            <Text style={styles.paragraph}>{cardInfo.description[1]}</Text>
-        </View>
-        
-        <ButtonTour />
-    
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder="Type your message here..."
+          onSubmitEditing={sendMessage} // Allow sending message with the return key
+        />
+        <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
+            <Image source={require("../Images/aa_sendbutton.png")} style={styles.sendButtonImage} />
+        </TouchableOpacity>
       </View>
-  )
+    </KeyboardAvoidingView>
+  );
 }
 
+// ... styles remain the same
+
 const styles = StyleSheet.create({
-    paragraph:{
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
-        fontSize: sizes.paragraphSizeMedium,
-        color: colors.secondary,
-        marginBottom: 25,
-        height: 100,
+    container: {
+      flex: 1,
+      backgroundColor: '#fff', // White background
     },
-    textDescription:{
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
-        fontSize: sizes.descriptionSize,
-        marginBottom: 8,
+    questionContainer: {
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: '#E8E8E8', // Light grey border for subtle separation
+      backgroundColor: 'white', // Ensuring the background is white
     },
-    wrapperDescription:{
-        marginHorizontal: 20,
+    questionText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#333', // Dark grey for better readability
+      marginBottom: 10, // Give some space below the question
     },
-    textHeader:{
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
-        fontSize: sizes.headerTourSize,
+    messagesContainer: {
+      flex: 1,
+      padding: 20, // Padding around the messages for a cleaner look
     },
-    wrapperHeader:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginHorizontal: 20,
-        marginBottom: 24,
+    message: {
+      fontSize: 14,
+      lineHeight: 20,
+      padding: 10,
+      borderWidth: 1,
+      borderColor: '#F0F0F0', // Light border for message bubbles
+      borderRadius: 15, // Rounded corners for message bubbles
+      backgroundColor: '#FAFAFA', // Slightly off-white for the message background
+      marginBottom: 10, // Space between messages
+      alignSelf: 'flex-start', // Align messages to the start
     },
-    price:{
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
-        color: colors.secondary,
+    inputContainer: {
+      borderTopWidth: 1,
+      borderTopColor: '#E8E8E8', // Light grey border to separate input area
+      padding: 10,
+      backgroundColor: 'white', // Ensuring the background is white
+      flexDirection: 'row', // Align input and button in a row
+      alignItems: 'center', // Center items vertically
     },
-    textPrice:{
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
-        fontSize: sizes.descriptionSize,
+    input: {
+      flex: 1,
+      height: 40,
+      marginHorizontal: 10,
+      borderWidth: 1,
+      borderColor: '#E8E8E8', // Light grey border for the input
+      borderRadius: 20, // Rounded corners for the input field
+      paddingHorizontal: 15, // Inner spacing for text
+      backgroundColor: '#FAFAFA', // Slightly off-white for the input background
+      fontSize: 14,
+      color: '#333', // Dark grey for input text
     },
-    textRating:{
-        fontFamily: 'Montserrat',
-        fontWeight: '700',
-        fontSize: sizes.descriptionSize,
-    },
-    wrapperStars:{
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    wrapperRating:{
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    wrapper:{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-        marginHorizontal: 20,
-    },
-    image:{
-        width: 348,
-        height: 295,
-        borderRadius: 30,
-    },
-    imageContainer:{
-        position: 'absolute',
-        top: 0,
-        width: '100%',
-        justifyContent: 'center',
-        marginHorizontal: 20,
-    },
-    container:{
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-})
+    sendButton: {
+        marginLeft: 10, // Add space between the input field and the send button
+        marginRight: 10, // Add space on the right side if needed
+      },
+      sendButtonImage: {
+        width: 80, // Set the width of the button
+        height: 80, // Set the height of the button
+        resizeMode: 'contain', // Ensure the image is scaled correctly
+      },
+  });
+  

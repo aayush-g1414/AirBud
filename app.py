@@ -51,11 +51,12 @@ def chat():
     
     # classify the query
     classification = classify_query(message)
-    if classification == 0:
+    print(classification)   
+    if classification == "0":
         return getFoodInfo(message)
-    elif classification == 1:
+    elif classification == "1":
         return getMovieInfo(message)
-    elif classification == 2:
+    elif classification == "2":
         return getLocationInfoOnline(message, flight_number, destination, arrival_time, destination_city)
     else:
         return getLocationInfo(message, flight_number, destination, arrival_time, destination_city)

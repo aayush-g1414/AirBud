@@ -1,14 +1,17 @@
 import json
 import requests
+import os
 
 from flask import Flask, request, jsonify
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
 
-keys = json.load(open('SuperSecretVars.json'))
-OPENAI_API_KEY = keys['OPENAI_API_KEY']
-PERPLEXITY_AUTH_KEY = keys['PERPLEXITY_AUTH_KEY']
+# keys = json.load(open('SuperSecretVars.json'))
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# PERPLEXITY_AUTH_KEY = os.getenv("PERPLEXITY_AUTH_KEY")
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def getLocationInfoOnline(question: str , flight_number: str , 
         destination: str, arrival_time: str, destination_city: str):
@@ -32,7 +35,7 @@ def getLocationInfoOnline(question: str , flight_number: str ,
     headers = {
         "accept": "application/json",
         "content-type": "application/json",
-        "authorization": PERPLEXITY_AUTH_KEY
+        "authorization": os.getenv("PERPLEXITY_AUTH_KEY")
     }
 
     response = requests.post(url, json=payload, headers=headers)
@@ -118,7 +121,7 @@ def getMovieInfo(question: str):
     words = []
     for i in range(3):
         words.append(_getMovieInfo(question, words))
-    return words
+    return jsonify({"response": words})
 
 def getFoodInfo(question: str):
     """Use OpenAI to get food information
