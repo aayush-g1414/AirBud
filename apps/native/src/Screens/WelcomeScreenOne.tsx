@@ -23,6 +23,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
     if(!loaded) {
         return null;
     }
+    
 
   return (
     <View style={styles.container}>
