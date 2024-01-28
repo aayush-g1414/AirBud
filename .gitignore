@@ -40,3 +40,6 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# env vars
+SuperSecretVars.json
