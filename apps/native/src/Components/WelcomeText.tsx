@@ -23,7 +23,7 @@ const [loaded] = useFonts({
     <View style={styles.textWrapper}>
         <View>
           <Text style={styles.textWelcome}>Hi, {props.name}👋</Text>
-          <Text style={styles.textTravel}>Let’s Travel Now</Text>
+          <Text style={styles.textTravel}>Happy Flying!</Text>
         </View>
 
         <TouchableOpacity onPress={props.onPress}>
