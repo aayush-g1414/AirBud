@@ -91,7 +91,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         return data;
 }
     } catch (error) {
-        console.error("Error fetching data:", error);
+        // console.error("Error fetching data:", error);
         return undefined;
     }
 }

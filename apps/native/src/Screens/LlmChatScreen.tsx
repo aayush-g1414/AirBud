@@ -59,7 +59,7 @@ export default function InFlightChatScreen() {
         setChat((currentChat) => [...currentChat, { name: "AI", message: response.data.response.toString() }]);
         }
       } catch (error) {
-        console.error('Error sending message:', error);
+        // console.error('Error sending message:', error);
       }
 
       // Emit through the socket for real-time communication

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
       const userToken = await AsyncStorage.getItem('userToken');
       setIsAuthenticated(!!userToken);
     } catch (e) {
-      console.error(e);
+      // console.error(e);
     }
   };
 

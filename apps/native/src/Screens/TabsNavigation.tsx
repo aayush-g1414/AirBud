@@ -25,7 +25,7 @@ function TabsNavigation() {
             console.log(!userToken);
             setIsAuthenticated(!!userToken);
           } catch (e) {
-            console.error(e);
+            // console.error(e);
           }
         };
     

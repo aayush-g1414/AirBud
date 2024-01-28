@@ -23,6 +23,7 @@ export default function TourScreenOne(props) {
     // console.log(route.params.name);
     // console.log(route.params.seat);
     const [seat, setSeat] = useState(props.route.params.seat);
+    const [name, setName] = useState(props.route.params.name); // [name, setName
     const [flightNumber, setFlightNumber] = useState(props.route.params.flightNumber);
     const [chatEntries, setChatEntries] = useState<ChatEntry[]>([
       {
@@ -82,7 +83,7 @@ export default function TourScreenOne(props) {
         if (inputText.trim()) {
             const isIntroduction = introductionsReceived < 0;
             socket.emit("send_message", {
-                answer: inputText,
+                answer: name + ": " + inputText,
                 isIntroduction,
                 flightNumber,
                 seat,
