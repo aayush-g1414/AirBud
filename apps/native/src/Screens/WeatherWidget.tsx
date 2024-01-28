@@ -1,16 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { HOST } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const WeatherWidget = (props) => {
   const [weather, setWeather] = useState(null);
+  const [temp, setTemp] = useState(null);
+  const [precip, setPrecip] = useState(null);
   const { latitude, longitude } = props;
 
+  const saveData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const loadData = async (key, setter) => {
+    try {
+      if (key === 'weatherData') {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+          setter(JSON.parse(value));
+        }
+      } else { 
+        const value = (await AsyncStorage.getItem(key) as GLfloat);
+        if (value !== null) {
+          setter(value);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetchWeather = async () => {
       try {
+        if (latitude === undefined || longitude === undefined) {
+          loadData('temp', setTemp)
+        loadData('precip', setPrecip)
+        loadData('weatherData', setWeather)
+        
+        } else {
+
+
         const response = await fetch(`http://${HOST}:8000/getDestWeatherData`, {
           method: 'POST',
           headers: {
@@ -20,9 +55,18 @@ const WeatherWidget = (props) => {
         });
   
         const weatherData = await response.json();
+        console.log(weatherData);
+        console.log(typeof weatherData.hourly.temperature_2m[0])
+        saveData('weatherData', weatherData.toString());
+        saveData('temp', weatherData.hourly.temperature_2m[0].toString());
+        saveData('precip', weatherData.hourly.precipitation[0].toString());
         setWeather(weatherData);
+        setTemp(weatherData.hourly.temperature_2m[0])
+        setPrecip(weatherData.hourly.precipitation[0])
+      }
+
       } catch (error) {
-        console.error(error);
+        //console.error(error);
       }
     };
   
@@ -37,8 +81,8 @@ const WeatherWidget = (props) => {
       {weather ? (
         <View style={styles.content}>
           <View style={styles.temperatureSection}>
-            <Text style={styles.temperatureText}>{weather.hourly.temperature_2m[0]}°C</Text>
-            <Text style={styles.weatherDescription}>{weather.hourly.precipitation[0]} mm precipitation</Text>
+            <Text style={styles.temperatureText}>{temp}°C</Text>
+            <Text style={styles.weatherDescription}>{precip} mm precipitation</Text>
           </View>
         </View>
       ) : (
