@@ -4,6 +4,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../assets/Colors';
 import getToKnow from '../database/gettingToKnowDatabase';
 import { Platform } from 'react-native';
+import io from "socket.io-client";
+import { HOST } from '@env';
 
 interface ChatEntry {
   question: string;
@@ -12,30 +14,69 @@ interface ChatEntry {
 
 const questions: string[] = getToKnow.questions;
 
+const socket = io(`http://${HOST}:8000`); // Moved outside of the component for persistent connection
+
 export default function TourScreenOne() {
     const [chatEntries, setChatEntries] = useState<ChatEntry[]>([
-        { question: "So, what are you waiting for? Introduce yourselves!", answer: "Remember, strangers are just friends waiting to happen :)" } // The initial question
-      ]);
-      const [inputText, setInputText] = useState<string>("");
-    
+      {
+        question:
+          "So, what are you waiting for? Introduce yourselves! Remember, strangers are just friends waiting to happen :)",
+        answer: "",
+      },
+      { question: "", answer: "" }, // Second empty answer
+    ]);
+    const [inputText, setInputText] = useState<string>("");
+    const [introductionsReceived, setIntroductionsReceived] = useState<number>(
+      0
+    );
+  
+    useEffect(() => {
+      socket.on("receive_message", (data) => {
+        console.log(data);
+        addEntry(data.answer, data.question, data.increment);
+      });
+  
+      return () => {
+        socket.off("receive_message");
+      };
+    }, [socket]);
+  
 
-  const addEntry = (answer: string): void => {
-    const randomIndex: number = Math.floor(Math.random() * questions.length);
-    const newQuestion: string = questions[randomIndex];
-    setChatEntries([...chatEntries, { question: newQuestion, answer }]);
-  };
-
-  const sendMessage = (): void => {
-    if (inputText.trim()) {
-      addEntry(inputText);
-      setInputText("");
-    }
-  };
+    useEffect(() => {
+        console.log(chatEntries.length);
+      },[chatEntries]);
+      const addEntry = (
+        answer: string,
+        question: string = "",
+        increment: boolean = false
+      ): void => {
+          if (increment) {
+            setIntroductionsReceived(prevCount => prevCount + 1);
+          }
+          
+          const newEntries = [...chatEntries, { question, answer }];
+          console.log(newEntries.length);  // logging new length before updating the state
+          setChatEntries(newEntries);
+      
+        };
+  
+    const sendMessage = (): void => {
+      if (inputText.trim()) {
+        // Check if it is an introduction message
+        const isIntroduction = introductionsReceived < 2;
+  
+        socket.emit("send_message", {
+          answer: inputText,
+          isIntroduction,
+        });
+        setInputText("");
+      }
+    };
 
   return (
     <KeyboardAvoidingView style={styles.container}
-    behavior={Platform.OS === "ios" ? "padding" : "height"}
-    keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}>
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}>
       <FlatList
         data={chatEntries}
         renderItem={({ item }) => (
@@ -57,13 +98,12 @@ export default function TourScreenOne() {
           onSubmitEditing={sendMessage} // Allow sending message with the return key
         />
         <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-            <Image source={require("../Images/aa_sendbutton.png")} style={styles.sendButtonImage} />
+          <Image source={require("../Images/aa_sendbutton.png")} style={styles.sendButtonImage} />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 }
-
 // ... styles remain the same
 
 const styles = StyleSheet.create({
