@@ -6,6 +6,7 @@ import colors from '../assets/Colors'
 import sizes from '../assets/Sizes'
 import { useFonts } from 'expo-font'
 import ButtonTour from '../Components/ButtonTour'
+import Flappy from "../Screens/flappy/App.js";
 
 export default function TourScreenOne() {
 
@@ -18,44 +19,49 @@ if(!loaded){
 }
 
   return (
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={require('../Images/tent.jpg')} style={styles.image} />
-        </View>
 
-        <View style={styles.wrapperHeader}>
-          <Text style={styles.textHeader}>{cardInfo.names[0]}</Text>
-          <TouchableOpacity>
-              <MaterialCommunityIcons name="heart-outline" color={`${colors.greenLight}`} size={35} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.wrapper}>
-            <View style={styles.wrapperRating}>
-                <Text style={styles.textRating}>Rating</Text>
-                <View style={styles.wrapperStars}>
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                    <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
-                </View>
-            </View>
-
-            <View>
-                <Text style={styles.textPrice}>Price</Text>
-                <Text style={styles.price}>{cardInfo.price[0]}</Text>
-            </View>
-        </View>
-
-        <View style={styles.wrapperDescription}>
-            <Text style={styles.textDescription}>Description</Text>
-            <Text style={styles.paragraph}>{cardInfo.description[0]}</Text>
-        </View>
+    <View style={styles.container}>
+        <Flappy />
         
-        <ButtonTour />
+    </View>
+    //   <View style={styles.container}>
+    //     <View style={styles.imageContainer}>
+    //       <Image source={require('../Images/tent.jpg')} style={styles.image} />
+    //     </View>
+
+    //     <View style={styles.wrapperHeader}>
+    //       <Text style={styles.textHeader}>{cardInfo.names[0]}</Text>
+    //       <TouchableOpacity>
+    //           <MaterialCommunityIcons name="heart-outline" color={`${colors.greenLight}`} size={35} />
+    //       </TouchableOpacity>
+    //     </View>
+
+    //     <View style={styles.wrapper}>
+    //         <View style={styles.wrapperRating}>
+    //             <Text style={styles.textRating}>Rating</Text>
+    //             <View style={styles.wrapperStars}>
+    //                 <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
+    //                 <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
+    //                 <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
+    //                 <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
+    //                 <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
+    //             </View>
+    //         </View>
+
+    //         <View>
+    //             <Text style={styles.textPrice}>Price</Text>
+    //             <Text style={styles.price}>{cardInfo.price[0]}</Text>
+    //         </View>
+    //     </View>
+
+    //     <View style={styles.wrapperDescription}>
+    //         <Text style={styles.textDescription}>Description</Text>
+    //         <Text style={styles.paragraph}>{cardInfo.description[0]}</Text>
+    //     </View>
+        
+    //     <ButtonTour />
     
-      </View>
+    //   </View>
   )
 }
 
