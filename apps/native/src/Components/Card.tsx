@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.menuText,
+        color: colors.white,
     },
     textAlign:{
         display: 'flex',
@@ -90,7 +91,9 @@ const styles = StyleSheet.create({
         width: 200,
         height: 250,
         borderRadius: 30,
-        backgroundColor: colors.white,
+        backgroundColor: colors.blue,
+        // change opacity of background color
+        
         elevation: 20,
         marginLeft: 35,
         // add border
