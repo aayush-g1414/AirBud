@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../assets/Colors';
 import axios from 'axios';
@@ -88,7 +88,7 @@ export default function InFlightChatScreen() {
           placeholder="Type your message here..."
         />
         <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
-          <MaterialCommunityIcons name="send-circle" size={32} color={colors.blue} />
+          <Image source={require("../Images/aa_sendbutton.png")} style={styles.sendButtonImage} />
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -102,7 +102,9 @@ const styles = StyleSheet.create({
   },
   messagesContainer: {
     flex: 1,
-    padding: 20
+    padding: 20,
+    marginTop: 30, // Add space at the bottom so the input field doesn't overlap
+
   },
   inputContainer: {
     flexDirection: 'row',
@@ -116,13 +118,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   sendButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 44,
-    height: 44
+    marginLeft: 10, // Add space between the input field and the send button
+    marginRight: 10, // Add space on the right side if needed
+  },
+  sendButtonImage: {
+    width: 80, // Set the width of the button
+    height: 80, // Set the height of the button
+    resizeMode: 'contain', // Ensure the image is scaled correctly
   },
   name: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   message: {
     marginBottom: 10,
