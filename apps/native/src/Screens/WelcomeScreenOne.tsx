@@ -27,7 +27,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
   return (
     <View style={styles.container}>
 
-        <Text style={styles.textTitle}>Airbud</Text>
+        <Text style={styles.textTitle}>AirBud</Text>
 
         <View style={styles.pictureContainer}>
             <Image style={styles.picture} source={require("../Images/airbud_logo.png")} />

@@ -33,6 +33,27 @@ export default function WelcomeScreenOne(props: NavigationProps) {
   async function main() {
     console.log("Sending request...");
     try {
+        if (text.startsWith("AA")) {
+            console.log("AA detected");
+            // const response = await fetch(`http://${HOST}:8001/flights?flightNumber=${text.substring(2)}`);
+            // console.log(response)
+            // const data = await response.json();
+            // console.log(data);
+            // if (data.length === 0) {
+            //     console.log("No flight found");
+            //     return;
+            // }
+            // const flight = data[0];
+            // console.log(flight);
+            setFlightNumber(parseInt(text.substring(2)));
+            setTimeout(() => {
+
+                // pass in `AA${flightNumber}` as a prop
+                props.navigation.navigate('HomeScreen', {flightNumber: `AA${text.substring(2)}`, name: name}) 
+                }
+                , 2000);
+            return;
+        } else {
         const normalResponse = await fetch(`http://${HOST}:8000/getOpenaiJSON`, {
             method: 'POST',
             headers: {
@@ -68,6 +89,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
       }
     }
         return data;
+}
     } catch (error) {
         console.error("Error fetching data:", error);
         return undefined;
@@ -172,6 +194,9 @@ const styles = StyleSheet.create({
         borderColor: "gray",
         borderWidth: 1,
         alignSelf:'center',
+        marginBottom: 20,
+        borderRadius: 10,
+        paddingLeft: 10,
     },
     inputContainer: {
         flex: 1,
