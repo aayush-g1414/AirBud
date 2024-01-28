@@ -33,15 +33,15 @@ if(!loaded){
         />
         <View style={styles.textAlign}>
             <Text style={styles.textHeader}>{props.header}</Text>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
                 <MaterialCommunityIcons name="heart-outline" color={`${colors.greenLight}`} size={24} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
 
         <View style={styles.infoAlign}>
-            <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
+            {/* <MaterialCommunityIcons name="star" color={`${colors.starColor}`} size={24} />
             <Text style={styles.result}>{props.result}</Text>
-            <Text style={styles.reviews}>({props.reviews} reviews)</Text>
+            <Text style={styles.reviews}>({props.reviews} reviews)</Text> */}
         </View>
     </View>
     </TouchableOpacity>
