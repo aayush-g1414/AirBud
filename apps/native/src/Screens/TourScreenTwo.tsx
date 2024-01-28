@@ -60,7 +60,7 @@ export default function TourScreenOne() {
   
     const sendMessage = (): void => {
         if (inputText.trim()) {
-            const isIntroduction = introductionsReceived < 1;
+            const isIntroduction = introductionsReceived < 0;
             socket.emit("send_message", {
                 answer: inputText,
                 isIntroduction,
