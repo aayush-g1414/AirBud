@@ -16,7 +16,8 @@ export default function WelcomeScreenOne(props: NavigationProps) {
 
     const navigation = useNavigation();
     const [loaded] = useFonts({
-        Montserrat: require('../assets/fonts/Montserrat.ttf'),
+        Montserrat: require('../assets/fonts/Montserrat-SemiBold.ttf'),
+        MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
     })
 
     if(!loaded) {
@@ -32,7 +33,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
             <Image style={styles.picture} source={require("../Images/airbud_logo.png")} />
         </View>        
 
-        <Text style={styles.textMain}>Connect Mid-Flight</Text>
+        <Text style={styles.textMain}>Elevate Your Journey</Text>
         <Text style={styles.textSecondary}>Turn strangers into friends, seek AI assistance, and message others you can't quite reach.</Text>
 
         <Lines colorOne={`${colors.red}`} colorTwo={`${colors.gray}`}/>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     textTitle:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'Montserrat-Bold',
         fontWeight: '700',
         fontSize: sizes.bellSize,
         color: colors.main,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     textMain:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'Montserrat-SemiBold',
         fontWeight: '700',
         fontSize: sizes.headerSize,
         color: colors.main,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
         marginBottom: 18,
     },
     textSecondary:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'Montserrat-SemiBold',
         fontWeight: '700',
         fontSize: sizes.paragraphSize,
         color: colors.secondary,

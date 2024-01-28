@@ -63,6 +63,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
 
     const [loaded] = useFonts({
         Montserrat: require('../assets/fonts/Montserrat.ttf'),
+        MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
     })
 
     if(!loaded) {
@@ -89,19 +90,21 @@ export default function WelcomeScreenOne(props: NavigationProps) {
             <Image style={styles.picture} source={require("../Images/plane.png")} />
         </View>
         
-        <Text style={styles.textMain}>Elevate Your Journey</Text>
+        <Text style={styles.textMain}>Connect Mid-Flight</Text>
         <Text style={styles.textSecondary}>Forge connections in the clouds, tap into smart support, and seamlessly communicate with companions.</Text>
 
         <Lines colorOne={`${colors.gray}`} colorTwo={`${colors.red}`}/>
 
-        <Button
-        onPress={() =>{
-          console.log("Pressed!");
-          
-           getInfo();
-        }}
-        name="Get Flight Number"
+        <Button 
+            onPress={() => {
+            console.log("Pressed!");
+            getInfo();
+            }}
+            name="Take me away!"
         />
+
+
+
 
     </View>
   )
@@ -114,14 +117,14 @@ const styles = StyleSheet.create({
 
     },
     textMain:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontSize: sizes.headerSize,
         color: colors.main,
         alignSelf: 'center',
         marginBottom: 18,
     },
     textSecondary:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.paragraphSize,
         color: colors.secondary,
