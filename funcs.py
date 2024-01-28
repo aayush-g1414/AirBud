@@ -176,4 +176,19 @@ def classify_query(query: str):
         return 3
     return chat_completion.choices[0].message.content
 
+message = "What snacks are available?"
+flight_number = "AA 123"
+destination = "JFK"
+arrival_time = "8:00 PM"
+destination_city = "New York City"
 
+# classify the query
+classification = classify_query(message)
+if classification == "0":
+    print(getFoodInfo(message))
+elif classification == "1":
+    print(getMovieInfo(message))
+elif classification == "2":
+    print(getLocationInfoOnline(message, flight_number, destination, arrival_time, destination_city))
+else:
+    print(getLocationInfo(message, flight_number, destination, arrival_time, destination_city))
