@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, FlatList, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from '../assets/Colors';
@@ -16,7 +16,14 @@ const questions: string[] = getToKnow.questions;
 
 const socket = io(`http://${HOST}:8000`); // Moved outside of the component for persistent connection
 
-export default function TourScreenOne() {
+export default function TourScreenOne(props) {
+  
+    console.log(props)
+    // console.log(route.params.flightNumber);
+    // console.log(route.params.name);
+    // console.log(route.params.seat);
+    const [seat, setSeat] = useState(props.route.params.seat);
+    const [flightNumber, setFlightNumber] = useState(props.route.params.flightNumber);
     const [chatEntries, setChatEntries] = useState<ChatEntry[]>([
       {
         question:
@@ -34,7 +41,20 @@ export default function TourScreenOne() {
     useEffect(() => {
       socket.on("receive_message", (data) => {
         console.log(data);
-        addEntry(data.answer, data.question, data.increment);
+        console.log(flightNumber)
+        if (data.flightNumber === flightNumber) {
+          console.log(seat[0])
+          if (seat[0] === data.seat[0]){
+            console.log(seat[1])
+            console.log(Math.abs(seat.charCodeAt(1) - data.seat.charCodeAt(1)))
+            // compare the 2nd character in the seat variable and see if they are one apart
+            if (Math.abs(seat.charCodeAt(1) - data.seat.charCodeAt(1)) === 1 || Math.abs(seat.charCodeAt(1) - data.seat.charCodeAt(1)) === 0){
+              console.log("same row")
+              addEntry(data.answer, data.question, data.increment);
+            }
+          }
+          
+        }
       });
   
       return () => {
@@ -64,6 +84,8 @@ export default function TourScreenOne() {
             socket.emit("send_message", {
                 answer: inputText,
                 isIntroduction,
+                flightNumber,
+                seat,
             });
     
             // Increment message count after checking if it's an introduction

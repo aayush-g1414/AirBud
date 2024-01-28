@@ -35,6 +35,7 @@ export default function HomeScreen(props: NavigationProps) {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [arrivalTime, setArrivalTime] = useState('');
+  const [seat, setSeat] = useState('');
 
   // Save data to AsyncStorage
   const saveData = async (key, value) => {
@@ -78,6 +79,7 @@ export default function HomeScreen(props: NavigationProps) {
     loadData('latitude', setLatitude);
     loadData('longitude', setLongitude);
     loadData('arrivalTime', setArrivalTime);
+    loadData('seat', setSeat)
     
 
     if (route.params?.name) {
@@ -104,9 +106,14 @@ export default function HomeScreen(props: NavigationProps) {
       saveData('arrivalTime', route.params.arrivalTime.toString());
       setArrivalTime(route.params.arrivalTime.toString());
     }
+
+    if (route.params?.seat) {
+      saveData('seat', route.params.seat.toString());
+      setSeat(route.params.seat.toString());
+    }
     // force re-render
     
-  }, [route.params?.name, route.params?.flightNumber, route.params?.latitude, route.params?.longitude, route.params?.arrivalTime]);
+  }, [route.params?.name, route.params?.flightNumber, route.params?.latitude, route.params?.longitude, route.params?.arrivalTime, route.params?.seat]);
 
   const [loaded] = useFonts({
     MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
@@ -127,7 +134,7 @@ export default function HomeScreen(props: NavigationProps) {
         
 
         <View style={styles.banner}>
-      <Text style={styles.bannerText}>Entertain Yourself!</Text>
+      <Text style={styles.bannerText}>Entertainment</Text>
     </View>
 
           {/* <TouchableOpacity>
@@ -137,7 +144,7 @@ export default function HomeScreen(props: NavigationProps) {
  
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <Card header={`${cardInfoDatabase.header[0]}`} image={require('../Images/icon1.png')} onPress={ () => props.navigation.navigate('TourScreenOne') } /> 
-            <Card header={`${cardInfoDatabase.header[1]}`} image={require('../Images/icon2.jpg')} onPress={ () => props.navigation.navigate('TourScreenTwo', {"name": name}) }/>  
+            <Card header={`${cardInfoDatabase.header[1]}`} image={require('../Images/icon2.jpg')} onPress={ () => props.navigation.navigate('TourScreenTwo', {"name": name, "seat": seat, "flightNumber":flightNumber}) }/>  
             <Card header={`${cardInfoDatabase.header[2]}`}  image={require('../Images/icon3.jpg')} onPress={ () => props.navigation.navigate('TourScreenThree') }/> 
         </ScrollView>
         

@@ -21,6 +21,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
 
     const [flightNumber, setFlightNumber] = useState(0);
     const [name, setName] = useState('');
+    const [seat, setSeat] = useState('');
   const getInfo = async () => {
     
     
@@ -81,7 +82,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         setTimeout(() => {
 
             // pass in `AA${flightNumber}` as a prop
-            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`, name: name, longitude: data[i].destination.location.longitude, latitude: data[i].destination.location.latitude, arrivalTime: data[i].arrivalTime}) 
+            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`, name: name, longitude: data[i].destination.location.longitude, latitude: data[i].destination.location.latitude, arrivalTime: data[i].arrivalTime, seat: seat}) 
             }
             , 2000);
         break;
@@ -116,6 +117,8 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         }
         <TextInput style={styles.textinput} placeholder="Enter your name" onChangeText={name_text => setName(name_text)} defaultValue={name} />
       <TextInput style={styles.textinput} placeholder="Enter your flight details or number" onChangeText={flight_text => setText(flight_text)} defaultValue={text} />
+      <TextInput style={styles.textinput} placeholder="Enter your flight seat (1A, 1B, etc)" onChangeText={seat => setSeat(seat)} defaultValue={seat} />
+
       </View>
       
       <StatusBar style="auto" />
