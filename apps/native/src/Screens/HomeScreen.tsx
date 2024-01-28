@@ -48,7 +48,7 @@ if(!loaded){
 
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <Card header={`${cardInfoDatabase.header[0]}`} result={`${cardInfoDatabase.result[0]}`} reviews={`${cardInfoDatabase.reviews[0]}`} image={require('../Images/tent.jpg')} onPress={ () => props.navigation.navigate('TourScreenOne') } /> 
-            <Card header={`${cardInfoDatabase.header[1]}`} result={`${cardInfoDatabase.result[1]}`} reviews={`${cardInfoDatabase.reviews[1]}`} image={require('../Images/caravan.jpg')} onPress={ () => props.navigation.navigate('TourScreenTwo') }/>  
+            <Card header={`${cardInfoDatabase.header[1]}`} result={`${cardInfoDatabase.result[1]}`} reviews={`${cardInfoDatabase.reviews[1]}`} image={require('../Images/caravan.jpg')} onPress={ () => props.navigation.navigate('TourScreenTwo', {"name": route.params.name}) }/>  
             <Card header={`${cardInfoDatabase.header[2]}`} result={`${cardInfoDatabase.result[2]}`} reviews={`${cardInfoDatabase.reviews[2]}`} image={require('../Images/cannoing.jpg')} onPress={ () => props.navigation.navigate('TourScreenThree') }/> 
         </ScrollView>
     </View>

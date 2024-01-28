@@ -7,7 +7,8 @@ import sizes from '../assets/Sizes'
 import { useFonts } from 'expo-font'
 import ButtonTour from '../Components/ButtonTour'
 
-export default function TourScreenOne() {
+export default function TourScreenOne(props: any) {
+console.log(props.route.params.name)
 
 const [loaded] = useFonts({
     Montserrat: require('../assets/fonts/Montserrat.ttf'),
