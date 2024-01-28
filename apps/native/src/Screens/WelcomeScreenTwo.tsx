@@ -8,25 +8,50 @@ import { useNavigation } from '@react-navigation/native'
 import OpenAI from "openai";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-
-
+import { HOST } from '@env';
 type NavigationProps = {
     navigation: any,
     onPress: () => void
 }
 
+
+// Access your HOST variable
+console.log(HOST);
+
 export default function WelcomeScreenOne(props: NavigationProps) {
 
     const [flightNumber, setFlightNumber] = useState(0);
+    const [name, setName] = useState('');
   const getInfo = async () => {
-    const parsedData = await main();
+    
+    
+    
+
+  };
+
+
+  async function main() {
+    console.log("Sending request...");
+    try {
+        const normalResponse = await fetch(`http://${HOST}:8000/getOpenaiJSON`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({text: text}), 
+        });
+        const normalData = await normalResponse.json();
+        console.log(normalData);
+        const parsedData = normalData;
       // console.log(parsedData.message.content)
-      const json = JSON.parse(parsedData.message.content);
+      const json = JSON.parse(parsedData["response"]);
+      console.log(json)
+
       const date = json["date"];
       const origin = json["origin"];
       const destination = json["destination"];
     
-    const response = await fetch(`http://localhost:4000/flights?date=${date}&origin=${origin}&destination=${destination}`);
+    const response = await fetch(`http://${HOST}:8001/flights?date=${date}&origin=${origin}&destination=${destination}`);
     const data = await response.json();
     for (let i = 0; i < data.length; i++) {
       // console.log(data[i].departureTime, json["departureTime"])
@@ -42,22 +67,13 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         break;
       }
     }
-    
-    
+        return data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return undefined;
+    }
+}
 
-  };
-
-  const openai = new OpenAI(({apiKey: "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",  dangerouslyAllowBrowser: true}));
-
-  async function main() {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: `Parse the following text into this json format: {date: \"2020-01-01\", origin: \"DFW\", destination=\"PHL\", departureTime:\"2024-10-21T09:01:00.000-05:00\"} based on the user specifications of the date, origin, destination, and departure time (convert this to millitary time as shown in the example): ${text}  ` }],
-      model: "gpt-4-turbo-preview",
-      response_format: { "type": "json_object" },
-    });
-
-    return completion.choices[0];
-  }
 
   const [text, setText] = useState('');
 
@@ -77,7 +93,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
       {flightNumber === 0 ? <Text style={styles.textSecondary}>Loading...</Text> : 
                             <Text style={styles.textMain}>AA{flightNumber}</Text>
         }
-        <TextInput style={styles.textinput} placeholder="Enter your name" onChangeText={name_text => setText(name_text)} defaultValue={text} />
+        <TextInput style={styles.textinput} placeholder="Enter your name" onChangeText={name_text => setName(name_text)} defaultValue={name} />
       <TextInput style={styles.textinput} placeholder="Enter your flight details or number" onChangeText={flight_text => setText(flight_text)} defaultValue={text} />
       </View>
       
@@ -98,7 +114,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         <Button 
             onPress={() => {
             console.log("Pressed!");
-            getInfo();
+            main();
             }}
             name="Take me away!"
         />

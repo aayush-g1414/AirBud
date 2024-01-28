@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     textTitle:{
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.bellSize,
         color: colors.main,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     textMain:{
-        fontFamily: 'Montserrat-SemiBold',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.headerSize,
         color: colors.main,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         marginBottom: 18,
     },
     textSecondary:{
-        fontFamily: 'Montserrat-SemiBold',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.paragraphSize,
         color: colors.secondary,
