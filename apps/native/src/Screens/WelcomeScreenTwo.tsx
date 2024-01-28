@@ -8,25 +8,71 @@ import { useNavigation } from '@react-navigation/native'
 import OpenAI from "openai";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-
-
+import { HOST } from '@env';
 type NavigationProps = {
     navigation: any,
     onPress: () => void
 }
 
+
+// Access your HOST variable
+console.log(HOST);
+
 export default function WelcomeScreenOne(props: NavigationProps) {
 
     const [flightNumber, setFlightNumber] = useState(0);
+    const [name, setName] = useState('');
   const getInfo = async () => {
-    const parsedData = await main();
+    
+    
+    
+
+  };
+
+
+  async function main() {
+    console.log("Sending request...");
+    try {
+        if (text.startsWith("AA")) {
+            console.log("AA detected");
+            // const response = await fetch(`http://${HOST}:8001/flights?flightNumber=${text.substring(2)}`);
+            // console.log(response)
+            // const data = await response.json();
+            // console.log(data);
+            // if (data.length === 0) {
+            //     console.log("No flight found");
+            //     return;
+            // }
+            // const flight = data[0];
+            // console.log(flight);
+            setFlightNumber(parseInt(text.substring(2)));
+            setTimeout(() => {
+
+                // pass in `AA${flightNumber}` as a prop
+                props.navigation.navigate('HomeScreen', {flightNumber: `AA${text.substring(2)}`, name: name}) 
+                }
+                , 2000);
+            return;
+        } else {
+        const normalResponse = await fetch(`http://${HOST}:8000/getOpenaiJSON`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({text: text}), 
+        });
+        const normalData = await normalResponse.json();
+        console.log(normalData);
+        const parsedData = normalData;
       // console.log(parsedData.message.content)
-      const json = JSON.parse(parsedData.message.content);
+      const json = JSON.parse(parsedData["response"]);
+      console.log(json)
+
       const date = json["date"];
       const origin = json["origin"];
       const destination = json["destination"];
     
-    const response = await fetch(`http://localhost:4000/flights?date=${date}&origin=${origin}&destination=${destination}`);
+    const response = await fetch(`http://${HOST}:8001/flights?date=${date}&origin=${origin}&destination=${destination}`);
     const data = await response.json();
     for (let i = 0; i < data.length; i++) {
       // console.log(data[i].departureTime, json["departureTime"])
@@ -36,33 +82,26 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         setTimeout(() => {
 
             // pass in `AA${flightNumber}` as a prop
-            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`}) 
+            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`, name: name}) 
             }
             , 2000);
         break;
       }
     }
-    
-    
+        return data;
+}
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return undefined;
+    }
+}
 
-  };
-
-  const openai = new OpenAI(({apiKey: "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",  dangerouslyAllowBrowser: true}));
-
-  async function main() {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: `Parse the following text into this json format: {date: \"2020-01-01\", origin: \"DFW\", destination=\"PHL\", departureTime:\"2024-10-21T09:01:00.000-05:00\"} based on the user specifications of the date, origin, destination, and departure time (convert this to millitary time as shown in the example): ${text}  ` }],
-      model: "gpt-4-turbo-preview",
-      response_format: { "type": "json_object" },
-    });
-
-    return completion.choices[0];
-  }
 
   const [text, setText] = useState('');
 
     const [loaded] = useFonts({
         Montserrat: require('../assets/fonts/Montserrat.ttf'),
+        MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
     })
 
     if(!loaded) {
@@ -76,7 +115,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
       {flightNumber === 0 ? <Text style={styles.textSecondary}>Loading...</Text> : 
                             <Text style={styles.textMain}>AA{flightNumber}</Text>
         }
-        <TextInput style={styles.textinput} placeholder="Enter your name" onChangeText={name_text => setText(name_text)} defaultValue={text} />
+        <TextInput style={styles.textinput} placeholder="Enter your name" onChangeText={name_text => setName(name_text)} defaultValue={name} />
       <TextInput style={styles.textinput} placeholder="Enter your flight details or number" onChangeText={flight_text => setText(flight_text)} defaultValue={text} />
       </View>
       
@@ -89,19 +128,21 @@ export default function WelcomeScreenOne(props: NavigationProps) {
             <Image style={styles.picture} source={require("../Images/plane.png")} />
         </View>
         
-        <Text style={styles.textMain}>Elevate Your Journey</Text>
+        <Text style={styles.textMain}>Connect Mid-Flight</Text>
         <Text style={styles.textSecondary}>Forge connections in the clouds, tap into smart support, and seamlessly communicate with companions.</Text>
 
         <Lines colorOne={`${colors.gray}`} colorTwo={`${colors.red}`}/>
 
-        <Button
-        onPress={() =>{
-          console.log("Pressed!");
-          
-           getInfo();
-        }}
-        name="Get Flight Number"
+        <Button 
+            onPress={() => {
+            console.log("Pressed!");
+            main();
+            }}
+            name="Take me away!"
         />
+
+
+
 
     </View>
   )
@@ -114,14 +155,14 @@ const styles = StyleSheet.create({
 
     },
     textMain:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontSize: sizes.headerSize,
         color: colors.main,
         alignSelf: 'center',
         marginBottom: 18,
     },
     textSecondary:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.paragraphSize,
         color: colors.secondary,
@@ -153,6 +194,9 @@ const styles = StyleSheet.create({
         borderColor: "gray",
         borderWidth: 1,
         alignSelf:'center',
+        marginBottom: 20,
+        borderRadius: 10,
+        paddingLeft: 10,
     },
     inputContainer: {
         flex: 1,

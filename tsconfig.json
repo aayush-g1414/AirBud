@@ -3,5 +3,9 @@
 
     "jsx": "react-jsx", // this line
   },
+  "include": [
+    "src", // or wherever your main source files are
+    "env.d.ts" // include the path to your env.d.ts file
+  ],
   "extends": "expo/tsconfig.base"
 }

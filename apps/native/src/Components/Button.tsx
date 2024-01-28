@@ -13,6 +13,7 @@ export default function Button(props: ButtonProps) {
 
   const [loaded] = useFonts({
     Monserrat: require('../assets/fonts/Montserrat.ttf'),
+    MonserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
   })
 
   if(!loaded){
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     buttonText:{
         fontSize: sizes.buttonTextSize,
         color: colors.white,
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
     }
 })
