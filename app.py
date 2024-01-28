@@ -27,19 +27,21 @@ def handle_send_message(data):
     global message_count
     isIntroduction = data["isIntroduction"]
     answer = data["answer"]
+    flightNumber = data["flightNumber"]
+    seat = data["seat"]
 
     if isIntroduction:
         # Broadcast introduction message
-        emit("receive_message", {"answer": answer, "question": "", "increment": True}, broadcast=True)
+        emit("receive_message", {"answer": answer, "question": "", "increment": True, "flightNumber":flightNumber, "seat":seat}, broadcast=True)
     else:
         message_count += 1
         if message_count % 2 == 0:
             # Send a new question after every two messages
             new_question = random.choice(questions)
-            emit("receive_message", {"answer": answer, "question": new_question}, broadcast=True)
+            emit("receive_message", {"answer": answer, "question": new_question, "flightNumber":flightNumber, "seat":seat}, broadcast=True)
         else:
             # Just send the answer
-            emit("receive_message", {"answer": answer, "question": ""}, broadcast=True)
+            emit("receive_message", {"answer": answer, "question": "", "flightNumber":flightNumber, "seat":seat}, broadcast=True)
 
 
 
