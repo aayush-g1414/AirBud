@@ -177,29 +177,3 @@ def classify_query(query: str):
     return chat_completion.choices[0].message.content
 
 
-app = Flask(__name__)
-
-@app.route('/query', methods=['POST'])
-def chat():
-    data = request.get_json()
-    message = data.get('message', '')
-    flight_number = data.get('flight_number', '')
-    destination = data.get('destination', '')
-    arrival_time = data.get('arrival_time', '')
-    destination_city = data.get('destination_city', '')
-
-    
-    # classify the query
-    classification = classify_query(message)
-    if classification == 0:
-        return getFoodInfo(message)
-    elif classification == 1:
-        return getMovieInfo(message)
-    elif classification == 2:
-        return getLocationInfoOnline(message, flight_number, destination, arrival_time, destination_city)
-    else:
-        return getLocationInfo(message, flight_number, destination, arrival_time, destination_city)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
