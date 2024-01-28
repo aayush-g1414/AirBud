@@ -17,7 +17,7 @@ type CardProps = {
 export default function Card(props: CardProps) {
     
 const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat.ttf'),
+    MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
 })
 
 if(!loaded){
@@ -50,7 +50,7 @@ if(!loaded){
 
 const styles = StyleSheet.create({
     reviews:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.buttonTextSmall,
         color: colors.secondary,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     textHeader:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.menuText,
     },
@@ -93,5 +93,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         elevation: 20,
         marginLeft: 35,
+        // add border
+        borderWidth: 4,
+        borderColor: colors.blue,
     },
 })
