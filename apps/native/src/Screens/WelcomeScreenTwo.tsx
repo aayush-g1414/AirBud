@@ -61,7 +61,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         setTimeout(() => {
 
             // pass in `AA${flightNumber}` as a prop
-            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`}) 
+            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`, name: name}) 
             }
             , 2000);
         break;

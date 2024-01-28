@@ -33,12 +33,12 @@ if(!loaded){
 
   return (
     <View style={styles.container}>
-        <WelcomeText name={`${nameDatabase.name}`} onPress={ () => props.navigation.navigate('MenuScreen')} />
+        <WelcomeText name={`${route.params.name}`} onPress={ () => props.navigation.navigate('MenuScreen')} />
         <InputBox />
         <Offer onPress={ () => props.navigation.navigate('TreasureScreen')} />
-
-        <View style={styles.wrapper}>
         <Text style={styles.textCategory}>{route.params.flightNumber}</Text>
+        <View style={styles.wrapper}>
+        
 
           <Text style={styles.textCategory}>Popular Tours</Text>
           <TouchableOpacity>
