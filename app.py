@@ -3,17 +3,50 @@ from funcs import *
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from openai import OpenAI
 from flask_cors import CORS, cross_origin
-
+from flask_socketio import SocketIO, send, emit
 import os
 from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__)
-
+import random
 CORS(app, resources={r'/*': {'origins': '*'}})
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 host = os.getenv("HOST")
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+questions = ["What's your favorite way to spend a Saturday?", "What's your go-to comfort food?", "How do you like to unwind after a long day?", "Are you a morning person or a night owl?", "What's your favorite season, and why?",
+        "If you could have dinner with any historical figure, who would it be?", "If you could travel anywhere in the world, where would you go?", "If you could meet any fictional character, who would it be?", "If you could live in any era of history, when would it be?", "If you could witness any historical event, what would it be?",
+        "What's your all-time favorite TV show?", "What's your favorite book?", "What's a movie or TV show you could watch over and over again?", "What is your favorite movie?", "What's your favorite type of music?",
+        "Do you have any hidden talents?", "What's the most adventurous thing you've ever done?", "If you could have any superpower, what would it be?", "What's a skill you've always wanted to learn?", "If you could have any job in the world, what would it be?",
+        "What's your most-used app on your phone?", "What's the best piece of advice you've ever received?", "Do you prefer sweet or savory snacks?", "Are you a cat person or a dog person?", "What's your favorite childhood memory?"]
+
+@socketio.on("send_message")
+def handle_send_message(data):
+    if data["isIntroduction"]:
+        # Just broadcast the introduction message without a new question
+        emit("receive_message", {
+            "answer": data["answer"],
+            "question": "",
+            "increment": True
+        }, broadcast=True)
+    else:
+        # Add a new question along with the answer
+        random_index = random.randint(0, len(questions) - 1)
+        new_question = questions[random_index]
+        emit("receive_message", {
+            "answer": data["answer"],
+            "question": new_question
+        }, broadcast=True)
+
+
+@socketio.on('chat_message')
+def on_chat_message(data):
+    print(f"Received message: {data}")
+    print(data)
+    emit('chat_message_receive', data, broadcast=True)
+
+
 @app.route('/getOpenaiJSON', methods=['POST'])
 def getOpenaiJSON():
     print("hello1")
@@ -63,6 +96,6 @@ def chat():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host=host, port=8000)
+    socketio.run(app, debug=True, host=host, port=8000)
     
     

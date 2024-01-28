@@ -44,19 +44,11 @@ function TabsNavigation() {
         
       }}>
     <Tab.Navigator>
-    {isAuthenticated ? (
-        <>
-
-        <Tab.Screen name="Home Screen" component={HomeScreen} options={{headerShown: false}} />
+    <Tab.Screen name="Welcome" component={AuthNavigation} options={{headerShown: false}} />
+    <Tab.Screen name="Home Screen" component={HomeScreen} options={{headerShown: false}} />
         <Tab.Screen name="LlmChatScreen" component={LlmChatScreen} options={{headerShown: false}} />
         <Tab.Screen name="InFlightChatScreen" component={InFlightChatScreen} options={{headerShown: false}} />
-        </>
-    ) : (
-        
-            <Tab.Screen name="Welcome" component={AuthNavigation} options={{headerShown: false}} />
-
-      
-    )}
+    
 
     </Tab.Navigator>
     </NavigationContainer>

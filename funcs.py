@@ -73,7 +73,7 @@ def getLocationInfo(question: str , flight_number: str ,
                 "content": user_prompt,
             }
         ],
-        model="gpt-4-turbo-preview",
+        model="gpt-3.5-turbo",
         max_tokens=2048,
     )
 
@@ -109,7 +109,7 @@ def _getMovieInfo(question: str, banned_movies: list):
                 "content": user_prompt,
             }
         ],
-        model="gpt-4-0125-preview",
+        model="gpt-4-32k-0314",
         max_tokens=64,
     )
     response = chat_completion.choices[0].message.content
@@ -143,7 +143,7 @@ def getFoodInfo(question: str):
                 "content": user_prompt,
             }
         ],
-        model="gpt-4-0125-preview",
+        model="gpt-4-32k-0314",
         max_tokens=512,
     )
 
@@ -170,7 +170,7 @@ def classify_query(query: str):
                 "content": user_prompt,
             }
         ],
-        model="gpt-4-turbo-preview",
+        model="gpt-4-32k-0314",
         max_tokens=1,
     )
 
