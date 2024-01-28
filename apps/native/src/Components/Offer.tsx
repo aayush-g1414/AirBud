@@ -23,6 +23,7 @@ if(!loaded){
     <LinearGradient style={styles.offerContainer}
           colors={[`${colors.linearGriadient.offerOne}`, `${colors.linearGriadient.offerTwo}`]}
         >
+            {/* make this the weather data */}
             <View style={styles.wrapper}>
                 <View style={styles.sectionOne}>
                     <Text style={styles.textHeader}>Explore The World and Find Best Deal!</Text>
