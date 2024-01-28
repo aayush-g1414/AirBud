@@ -32,6 +32,9 @@ export default function HomeScreen(props: NavigationProps) {
 
   const [name, setName] = useState('');
   const [flightNumber, setFlightNumber] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [arrivalTime, setArrivalTime] = useState('');
 
   // Save data to AsyncStorage
   const saveData = async (key, value) => {
@@ -72,19 +75,38 @@ export default function HomeScreen(props: NavigationProps) {
   useEffect(() => {
     loadData('name', setName);
     loadData('flightNumber', setFlightNumber);
+    loadData('latitude', setLatitude);
+    loadData('longitude', setLongitude);
+    loadData('arrivalTime', setArrivalTime);
     
 
     if (route.params?.name) {
       saveData('name', route.params.name);
       setName(route.params.name);
+      
     }
     if (route.params?.flightNumber) {
       saveData('flightNumber', route.params.flightNumber);
       setFlightNumber(route.params.flightNumber);
     }
+
+    if (route.params?.latitude) {
+      saveData('latitude', route.params.latitude.toString());
+      setLatitude(route.params.latitude.toString());
+    }
+
+    if (route.params?.longitude) {
+      saveData('longitude', route.params.longitude.toString());
+      setLongitude(route.params.longitude.toString());
+    }
+
+    if (route.params?.arrivalTime) {
+      saveData('arrivalTime', route.params.arrivalTime.toString());
+      setArrivalTime(route.params.arrivalTime.toString());
+    }
     // force re-render
     
-  }, [route.params?.name, route.params?.flightNumber]);
+  }, [route.params?.name, route.params?.flightNumber, route.params?.latitude, route.params?.longitude, route.params?.arrivalTime]);
 
   const [loaded] = useFonts({
     MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
@@ -98,8 +120,8 @@ export default function HomeScreen(props: NavigationProps) {
   return (
     <View style={styles.container}>
         <WelcomeText name={name} onPress= {clearAllData} />
-        <WeatherWidget latitude={route.params?.latitude} longitude={route.params?.longitude} />
-        <TimeUntilArrivalWidget arrivalTime={route.params?.arrivalTime} />
+        <WeatherWidget latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} />
+        <TimeUntilArrivalWidget arrivalTime={arrivalTime as Date} />
        <Text style={styles.textCategory_flight}>{flightNumber}</Text>
         <View style={styles.wrapper}>
         
