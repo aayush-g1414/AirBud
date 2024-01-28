@@ -1,6 +1,9 @@
+from funcs import *
+
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from openai import OpenAI
 from flask_cors import CORS, cross_origin
+
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -35,6 +38,27 @@ def getOpenaiJSON():
 
     # Returning the response as JSON
     return jsonify({"response": response_content})
+
+@app.route('/query', methods=['POST'])
+def chat():
+    data = request.get_json()
+    message = data.get('message', '')
+    flight_number = data.get('flight_number', '')
+    destination = data.get('destination', '')
+    arrival_time = data.get('arrival_time', '')
+    destination_city = data.get('destination_city', '')
+
+    
+    # classify the query
+    classification = classify_query(message)
+    if classification == 0:
+        return getFoodInfo(message)
+    elif classification == 1:
+        return getMovieInfo(message)
+    elif classification == 2:
+        return getLocationInfoOnline(message, flight_number, destination, arrival_time, destination_city)
+    else:
+        return getLocationInfo(message, flight_number, destination, arrival_time, destination_city)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,42 @@
+{
+    "The Last Voyage of the Demeter": {
+        "cast": "Corey Hawkins, Aisling Franciosi, Liam Cunningham, David Dastmalchian",
+        "genres": ["Fantasy", "Horror"],
+        "desc": "Based on a single chapter, the Captain's Log, from Bram Stoker's classic 1897 novel 'Dracula', the story is set aboard the Russian schooner Demeter, which was chartered to carry private cargo - 24 unmarked wooden crates - from Carpathia to London. The film will detail the strange events that befell the doomed crew as they attempt to survive the ocean voyage, stalked each night by a terrifying presence on board the ship. When it finally arrived near Whitby Harbour, it was derelict. There was no trace of the crew."
+    },
+    "The Secret Kingdom": {
+        "cast": "Alyla Browne, Alice Parkinson, Sam Everingham, Gabrielle Chan",
+        "genres": ["Adventure", "Family"],
+        "desc": "Join Peter and Verity on a magical journey, as they embark on a quest to unite five mystical treasures to defeat an ancient enemy - the evil Shroud, and save an enchanted land in this thrilling fantasy adventure fit for the whole family!"
+    },
+    "The Unlikely Pilgrimage of Harold Fry": {
+        "cast": "Jim Broadbent, Penelope Wilton, Earl Cave, Linda Bassett",
+        "genres": ["Drama"],
+        "desc": "Harold is an ordinary man who has passed through life, living on the side lines, until he goes to post a letter one day...and just keeps walking"
+    },
+    "Barbie": {
+        "cast": "Margot Robbie, Ryan Gosling, America Ferrera, Kate McKinnon",
+        "genres": ["Comedy", "Family", "Adventure"],
+        "desc": "To live in Barbie Land is to be a perfect being in a perfect place. Unless you have a full-on existential crisis. Or you're a Ken."
+    },
+    "My Big Fat Greek Wedding 3": {
+        "cast": "Nia Vardalos, John Corbett, Andrea Martin, Elena Kampouris",
+        "genres": ["Comedy", "Romance", "Drama"],
+        "desc": "After travelling to Greece for a family reunion, a woman attempts to locate her deceased father's childhood friends."
+    },
+    "Gran Turismo : Based on A True Story": {
+        "cast": "Djimon Hounsou, Orlando Bloom, David Harbour, Darren Barnet",
+        "genres": ["Action", "Drama", "Adventure"],
+        "desc": "A teenage Gran Turismo player wins a series of Nissan competitions and later becomes an actual professional race car driver."
+    },
+    "Mission: Impossible - Dead Reckoning Part One": {
+        "cast": "Tom Cruise, Hayley Atwell, Ving Rhames, Simon Pegg",
+        "genres": ["Action", "Adventure", "Thriller"],
+        "desc": "Ethan Hunt and his IMF team must track down a dangerous weapon before it falls into the wrong hands."
+    },
+    "The Equalizer 3": {
+        "cast": "Denzel Washington, Dakota Fanning, David Denman, Sonia Ammar",
+        "genres": ["Action", "Crime", "Thriller"],
+        "desc": "Robert McCall finds himself at home in Southern Italy but he discovers his friends are under the control of local crime bosses. As events turn deadly, McCall knows what he has to do: become his friends' protector by taking on the mafia."
+    }
+}
