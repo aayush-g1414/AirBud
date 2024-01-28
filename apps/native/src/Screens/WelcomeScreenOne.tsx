@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import colors from '../assets/Colors'
 import sizes from '../assets/Sizes'
@@ -26,14 +26,16 @@ export default function WelcomeScreenOne(props: NavigationProps) {
   return (
     <View style={styles.container}>
 
-        <View style={styles.pictureContainer}>
-            <Image style={styles.picture} source={require("../Images/adventure.svg")} />
-        </View>
-    
-        <Text style={styles.textMain}>Explore a New World</Text>
-        <Text style={styles.textSecondary}>Find place for travel, campaign, hiking. Relax and enjoy your trip!</Text>
+        <Text style={styles.textTitle}>Airbud</Text>
 
-        <Lines colorOne={`${colors.green}`} colorTwo={`${colors.gray}`}/>
+        <View style={styles.pictureContainer}>
+            <Image style={styles.picture} source={require("../Images/airbud_logo.png")} />
+        </View>        
+
+        <Text style={styles.textMain}>Connect Mid-Flight</Text>
+        <Text style={styles.textSecondary}>Turn strangers into friends, seek AI assistance, and message others you can't quite reach.</Text>
+
+        <Lines colorOne={`${colors.red}`} colorTwo={`${colors.gray}`}/>
 
         <Button name="Next" onPress={ () => props.navigation.navigate('WelcomeScreenTwo')} />
     </View>
@@ -44,6 +46,14 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         justifyContent: 'flex-end',
+    },
+    textTitle:{
+        fontFamily: 'Montserrat',
+        fontWeight: '700',
+        fontSize: sizes.bellSize,
+        color: colors.main,
+        alignSelf: 'center',
+        marginTop: 50,
     },
     textMain:{
         fontFamily: 'Montserrat',
@@ -70,6 +80,17 @@ const styles = StyleSheet.create({
     },
     picture:{
         width: '100%',
-        height: 500,
+        height: 280,
+        alignSelf: 'center',
+        marginTop: 170,
     },
+    // image: {
+    //     flex: 1,
+    //     justifyContent: 'center',
+    //     // push to the back
+    //     zIndex: -1,
+    //     opacity: 0.55,
+    //     // make the image longer
+    //     height: '100%',
+    //   },
 })
