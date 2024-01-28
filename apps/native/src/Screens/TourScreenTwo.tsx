@@ -20,15 +20,16 @@ export default function TourScreenOne() {
     const [chatEntries, setChatEntries] = useState<ChatEntry[]>([
       {
         question:
-          "So, what are you waiting for? Introduce yourselves! Remember, strangers are just friends waiting to happen :)",
-        answer: "",
+          "So, what are you waiting for? Introduce yourselves!",
+        answer: "Remember, strangers are just friends waiting to happen :)",
       },
-      { question: "", answer: "" }, // Second empty answer
     ]);
     const [inputText, setInputText] = useState<string>("");
     const [introductionsReceived, setIntroductionsReceived] = useState<number>(
       0
     );
+    const [totalMessagesSent, setTotalMessagesSent] = useState<number>(0);
+
   
     useEffect(() => {
       socket.on("receive_message", (data) => {
@@ -45,33 +46,37 @@ export default function TourScreenOne() {
     useEffect(() => {
         console.log(chatEntries.length);
       },[chatEntries]);
-      const addEntry = (
-        answer: string,
-        question: string = "",
-        increment: boolean = false
-      ): void => {
-          if (increment) {
+      const addEntry = (answer: string, question: string = "", increment: boolean = false): void => {
+        // Update introductions count
+        if (increment) {
             setIntroductionsReceived(prevCount => prevCount + 1);
-          }
-          
-          const newEntries = [...chatEntries, { question, answer }];
-          console.log(newEntries.length);  // logging new length before updating the state
-          setChatEntries(newEntries);
-      
-        };
+        }
+    
+        // Add new entry
+        const newEntry = { question, answer };
+        setChatEntries(prevEntries => [...prevEntries, newEntry]);
+    };
+    
   
     const sendMessage = (): void => {
-      if (inputText.trim()) {
-        // Check if it is an introduction message
-        const isIntroduction = introductionsReceived < 2;
-  
-        socket.emit("send_message", {
-          answer: inputText,
-          isIntroduction,
-        });
-        setInputText("");
-      }
+        if (inputText.trim()) {
+            const isIntroduction = introductionsReceived < 1;
+            socket.emit("send_message", {
+                answer: inputText,
+                isIntroduction,
+            });
+    
+            // Increment message count after checking if it's an introduction
+            if (!isIntroduction) {
+                setTotalMessagesSent(prevCount => prevCount + 1);
+            }
+    
+            setInputText("");
+        }
     };
+    
+    
+    
 
   return (
     <KeyboardAvoidingView style={styles.container}

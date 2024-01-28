@@ -21,23 +21,26 @@ questions = ["What's your favorite way to spend a Saturday?", "What's your go-to
         "Do you have any hidden talents?", "What's the most adventurous thing you've ever done?", "If you could have any superpower, what would it be?", "What's a skill you've always wanted to learn?", "If you could have any job in the world, what would it be?",
         "What's your most-used app on your phone?", "What's the best piece of advice you've ever received?", "Do you prefer sweet or savory snacks?", "Are you a cat person or a dog person?", "What's your favorite childhood memory?"]
 
+message_count = 0
 @socketio.on("send_message")
 def handle_send_message(data):
-    if data["isIntroduction"]:
-        # Just broadcast the introduction message without a new question
-        emit("receive_message", {
-            "answer": data["answer"],
-            "question": "",
-            "increment": True
-        }, broadcast=True)
+    global message_count
+    isIntroduction = data["isIntroduction"]
+    answer = data["answer"]
+
+    if isIntroduction:
+        # Broadcast introduction message
+        emit("receive_message", {"answer": answer, "question": "", "increment": True}, broadcast=True)
     else:
-        # Add a new question along with the answer
-        random_index = random.randint(0, len(questions) - 1)
-        new_question = questions[random_index]
-        emit("receive_message", {
-            "answer": data["answer"],
-            "question": new_question
-        }, broadcast=True)
+        message_count += 1
+        if message_count % 2 == 0:
+            # Send a new question after every two messages
+            new_question = random.choice(questions)
+            emit("receive_message", {"answer": answer, "question": new_question}, broadcast=True)
+        else:
+            # Just send the answer
+            emit("receive_message", {"answer": answer, "question": ""}, broadcast=True)
+
 
 
 @socketio.on('chat_message')
