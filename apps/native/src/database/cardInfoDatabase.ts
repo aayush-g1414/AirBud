@@ -1,5 +1,5 @@
 const cardInfo = {
-    header: ["Feeling To Yourself?", "Feeling Adventurous?", "Feeling Talkative"],
+    header: ["Feeling To Yourself?", "Feeling Friendly?", "Feeling Distant?"],
     result: ["5.0", "5.0", "5.0"],
     reviews: ["945", "461", "603"],
     // names: ["Night Camp", "Caravan Riding", "Canoeing"],

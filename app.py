@@ -16,7 +16,6 @@ host = os.getenv("HOST")
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 @app.route('/getOpenaiJSON', methods=['POST'])
 def getOpenaiJSON():
-    print("hello1")
     text = request.json.get('text')
     print(text)
     chat_completion = client.chat.completions.create(
@@ -60,6 +59,25 @@ def chat():
         return getLocationInfoOnline(message, flight_number, destination, arrival_time, destination_city)
     else:
         return getLocationInfo(message, flight_number, destination, arrival_time, destination_city)
+
+@app.route('/getDestWeatherData', methods=['POST'])
+def getWeatherData():
+    data = request.get_json()
+    latitude = data.get('latitude', '')
+    longitude = data.get('longitude', '')
+
+
+    # Replace with the actual API URL and include your API key if needed
+    api_url = f'https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&hourly=temperature_2m,precipitation,cloudcover'
+
+    try:
+        response = requests.get(api_url)
+        weather_data = response.json()
+        print(weather_data)
+        return jsonify(weather_data)
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 
 
 if __name__ == '__main__':

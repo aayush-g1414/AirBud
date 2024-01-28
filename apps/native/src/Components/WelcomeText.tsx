@@ -12,7 +12,7 @@ type NameProps = {
 
 export default function WelcomeText(props: NameProps) {
 const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat.ttf'),
+  MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
 })
 
     if(!loaded){
@@ -21,30 +21,31 @@ const [loaded] = useFonts({
 
   return (
     <View style={styles.textWrapper}>
+        
+
+        <TouchableOpacity onPress={props.onPress}>
+          <MaterialCommunityIcons
+            name="arrow-left"
+            size={sizes.bellSize}
+          />
+        </TouchableOpacity>
         <View>
           <Text style={styles.textWelcome}>Hi, {props.name}👋</Text>
           <Text style={styles.textTravel}>Happy Flying!</Text>
         </View>
-
-        <TouchableOpacity onPress={props.onPress}>
-          <MaterialCommunityIcons
-            name="bell-badge-outline"
-            size={sizes.bellSize}
-          />
-        </TouchableOpacity>
       </View>
   )
 }
 
 const styles = StyleSheet.create({
     textWelcome:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.welcomeText,
         color: colors.secondary,
       },
       textTravel:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.buttonTextSize,
       },

@@ -16,7 +16,6 @@ type NavigationProps = {
 
 
 // Access your HOST variable
-console.log(HOST);
 
 export default function WelcomeScreenOne(props: NavigationProps) {
 
@@ -82,7 +81,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
         setTimeout(() => {
 
             // pass in `AA${flightNumber}` as a prop
-            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`, name: name}) 
+            props.navigation.navigate('HomeScreen', {flightNumber: `AA${data[i].flightNumber}`, name: name, longitude: data[i].destination.location.longitude, latitude: data[i].destination.location.latitude, arrivalTime: data[i].arrivalTime}) 
             }
             , 2000);
         break;
@@ -100,7 +99,7 @@ export default function WelcomeScreenOne(props: NavigationProps) {
   const [text, setText] = useState('');
 
     const [loaded] = useFonts({
-        Montserrat: require('../assets/fonts/Montserrat.ttf'),
+        // Montserrat: require('../assets/fonts/Montserrat.ttf'),
         MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
     })
 

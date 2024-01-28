@@ -13,6 +13,8 @@ import React, { useEffect, useState } from 'react'
 // Import AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from '../Components/Button'
+import WeatherWidget from './WeatherWidget';
+import TimeUntilArrivalWidget from './estTime';
 
 
 type NavigationProps = {
@@ -53,15 +55,6 @@ export default function HomeScreen(props: NavigationProps) {
   };
 
   // Clear specific cached data by key
-  const clearData = async (key) => {
-    try {
-      await AsyncStorage.removeItem(key);
-      if (key === 'name') setName('');
-      if (key === 'flightNumber') setFlightNumber('');
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Clear all cached data
   const clearAllData = async () => {
@@ -94,7 +87,7 @@ export default function HomeScreen(props: NavigationProps) {
   }, [route.params?.name, route.params?.flightNumber]);
 
   const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat.ttf'),
+    MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
   })
   
   if(!loaded){
@@ -104,20 +97,22 @@ export default function HomeScreen(props: NavigationProps) {
 
   return (
     <View style={styles.container}>
-        <WelcomeText name={name} onPress={ () => props.navigation.navigate('MenuScreen')} />
-        <Offer onPress={ () => props.navigation.navigate('TreasureScreen')} />
-        <Text style={styles.textCategory}>{flightNumber}</Text>
+        <WelcomeText name={name} onPress= {clearAllData} />
+        <WeatherWidget latitude={route.params?.latitude} longitude={route.params?.longitude} />
+        <TimeUntilArrivalWidget arrivalTime={route.params?.arrivalTime} />
+       <Text style={styles.textCategory_flight}>{flightNumber}</Text>
         <View style={styles.wrapper}>
         
 
-          <Text style={styles.textCategory}>Games & Entertainment </Text>
+        <View style={styles.banner}>
+      <Text style={styles.bannerText}>Entertain Yourself!</Text>
+    </View>
+
           {/* <TouchableOpacity>
               <Text style={styles.textView}>See All</Text>
           </TouchableOpacity> */}
         </View>
  
-        <Button title="Clear All Cache" onPress={clearAllData} />
-
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <Card header={`${cardInfoDatabase.header[0]}`} image={require('../Images/icon1.png')} onPress={ () => props.navigation.navigate('TourScreenOne') } /> 
             <Card header={`${cardInfoDatabase.header[1]}`} image={require('../Images/icon2.jpg')} onPress={ () => props.navigation.navigate('TourScreenTwo', {"name": name}) }/>  
@@ -130,16 +125,18 @@ export default function HomeScreen(props: NavigationProps) {
 
 const styles = StyleSheet.create({
   textView:{
-    fontFamily: 'Montserrat',
+    fontFamily: 'MontserratBold',
     fontWeight: '700',
     fontSize: sizes.menuText,
     color: colors.secondary,
     marginRight: 25,
   },
-  textCategory:{
-    fontFamily: 'Montserrat',
+  textCategory_flight:{
+    fontFamily: 'MontserratBold',
     fontWeight: '700',
-    fontSize: sizes.buttonTextSize,
+    fontSize: sizes.hugeSize,
+    // center text
+    alignSelf: 'center',
   },
   wrapper:{
     display: 'flex',
@@ -152,4 +149,25 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 50,
   },
+  textCategory_phrase:{
+    fontFamily: 'MontserratBold',
+    fontWeight: '700',
+    fontSize: sizes.menuText,
+    // center text
+    marginLeft: 95,
+  },
+  banner: {
+    backgroundColor: '#14ACDC',
+    width: '100%', // Full width
+    alignItems: 'center', // Center content horizontally
+    paddingVertical: 10, // Add some padding vertically
+    borderRadius: 10,
+  },
+  bannerText: {
+    fontFamily: 'MontserratBold',
+    fontWeight: '700',
+    fontSize: sizes.menuText,
+    color: 'white', // White text color
+  },
+
 })

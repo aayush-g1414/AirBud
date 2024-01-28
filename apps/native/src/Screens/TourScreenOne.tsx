@@ -11,7 +11,7 @@ import Flappy from "../Screens/flappy/App.js";
 export default function TourScreenOne() {
 
 const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat.ttf'),
+    MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
 })
 
 if(!loaded){
@@ -67,7 +67,7 @@ if(!loaded){
 
 const styles = StyleSheet.create({
     paragraph:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.paragraphSizeMedium,
         color: colors.secondary,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     textDescription:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.descriptionSize,
         marginBottom: 8,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     textHeader:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.headerTourSize,
     },
@@ -96,17 +96,17 @@ const styles = StyleSheet.create({
         marginBottom: 24,
     },
     price:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         color: colors.secondary,
     },
     textPrice:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.descriptionSize,
     },
     textRating:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.descriptionSize,
     },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 20,
+        marginBottom: 20,   
         marginHorizontal: 20,
     },
     image:{

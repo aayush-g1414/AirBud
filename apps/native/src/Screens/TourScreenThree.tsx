@@ -10,7 +10,7 @@ import ButtonTour from '../Components/ButtonTour'
 export default function TourScreenOne() {
 
 const [loaded] = useFonts({
-    Montserrat: require('../assets/fonts/Montserrat.ttf'),
+    MontserratBold: require('../assets/fonts/Montserrat-Bold.ttf'),
 })
 
 if(!loaded){
@@ -61,7 +61,7 @@ if(!loaded){
 
 const styles = StyleSheet.create({
     paragraph:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.paragraphSizeMedium,
         color: colors.secondary,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     textDescription:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.descriptionSize,
         marginBottom: 8,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     textHeader:{
-        fontFamily: 'Montserrat',
+        fontFamily: 'MontserratBold',
         fontWeight: '700',
         fontSize: sizes.headerTourSize,
     },
