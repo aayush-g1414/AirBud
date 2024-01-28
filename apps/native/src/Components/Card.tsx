@@ -93,5 +93,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         elevation: 20,
         marginLeft: 35,
+        // add border
+        borderWidth: 4,
+        borderColor: colors.blue,
     },
 })
