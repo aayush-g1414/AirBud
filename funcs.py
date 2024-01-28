@@ -40,7 +40,7 @@ def getLocationInfoOnline(question: str , flight_number: str ,
 
     response = requests.post(url, json=payload, headers=headers)
 
-    return str(json.loads(response.text)["choices"][0]["message"]["content"])
+    return json.loads(response.text)["choices"][0]["message"]["content"]
 
 def getLocationInfo(question: str , flight_number: str ,
         destination: str, arrival_time: str, destination_city: str):
