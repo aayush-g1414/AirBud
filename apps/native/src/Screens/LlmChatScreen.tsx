@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function InFlightChatScreen() {
   const [chat, setChat] = useState([]);
+  const [name, setName] = useState("");
   const [input, setInput] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
   const [latitude, setLatitude] = useState("");

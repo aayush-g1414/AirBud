@@ -47,21 +47,21 @@ def handle_send_message(data):
 
 @socketio.on('chat_message')
 def on_chat_message(data):
-    print(f"Received message: {data}")
-    print(data)
+    # print(f"Received message: {data}")
+    # print(data)
     emit('chat_message_receive', data, broadcast=True)
 
 
 @app.route('/getOpenaiJSON', methods=['POST'])
 def getOpenaiJSON():
     text = request.json.get('text')
-    print(text)
+    # print(text)
     chat_completion = client.chat.completions.create(
         model="gpt-4-turbo-preview",
         messages=[
             {
                 "role": "user",
-                "content": f'Parse the following text into this json format: {{"date\": \"2020-01-01\", origin: \"DFW\", destination=\"PHL\", departureTime:\"2024-10-21T09:01:00.000-05:00\"}} based on the user specifications of the date, origin, destination, and departure time (convert this to millitary time as shown in the example): {text}',
+                "content": f'Parse the following text into this json format: {{"date\": \"2024-01-28\", origin: \"DFW\", destination=\"PHL\", departureTime:\"2024-01-28T17:18:00.000-06:00\"}} based on the user specifications of the date, origin, destination, and departure time (convert this to millitary time as shown in the example... also note that the 06:00 at the end is for the time behind UTC so remember when day light savings is): {text}',
             }
         ],
         response_format={"type": "json_object"}
@@ -71,7 +71,7 @@ def getOpenaiJSON():
     # completion.choices[0].message.content;
 
     response_content = chat_completion.choices[0].message.content
-    print(response_content)
+    # print(response_content)
 
     # Returning the response as JSON
     return jsonify({"response": response_content})
@@ -111,7 +111,7 @@ def getWeatherData():
     try:
         response = requests.get(api_url)
         weather_data = response.json()
-        print(weather_data)
+        # print(weather_data)
         return jsonify(weather_data)
     except Exception as e:
         return jsonify({'error': str(e)})

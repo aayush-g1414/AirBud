@@ -8,13 +8,13 @@ const WeatherWidget = (props) => {
   const [weather, setWeather] = useState(null);
   const [temp, setTemp] = useState(null);
   const [precip, setPrecip] = useState(null);
-  const { latitude, longitude } = props;
+  const { latitude, longitude, arrivalTime } = props;
 
   const saveData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -32,7 +32,7 @@ const WeatherWidget = (props) => {
         }
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   useEffect(() => {
@@ -55,14 +55,24 @@ const WeatherWidget = (props) => {
         });
   
         const weatherData = await response.json();
-        console.log(weatherData);
-        console.log(typeof weatherData.hourly.temperature_2m[0])
+        // console.log(weatherData);
+        // console.log(typeof weatherData.hourly.temperature_2m[0])
         saveData('weatherData', weatherData.toString());
-        saveData('temp', weatherData.hourly.temperature_2m[0].toString());
-        saveData('precip', weatherData.hourly.precipitation[0].toString());
-        setWeather(weatherData);
-        setTemp(weatherData.hourly.temperature_2m[0])
-        setPrecip(weatherData.hourly.precipitation[0])
+        
+        // find nearest hour to arrival time
+        for (let i = 1; i < weatherData.hourly.temperature_2m.length; i++) {
+          // console.log(weatherData.hourly.time[i])
+          // console.log(arrivalTime)
+          if (weatherData.hourly.time[i] > arrivalTime) {
+            saveData('temp', weatherData.hourly.temperature_2m[i-1].toString());
+            saveData('precip', weatherData.hourly.precipitation[i-1].toString());
+            setWeather(weatherData);
+            setTemp(weatherData.hourly.temperature_2m[i-1])
+            setPrecip(weatherData.hourly.precipitation[i-1])
+            break;
+          }
+        }
+        
       }
 
       } catch (error) {

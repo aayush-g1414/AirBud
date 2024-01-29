@@ -127,7 +127,7 @@ export default function HomeScreen(props: NavigationProps) {
   return (
     <View style={styles.container}>
         <WelcomeText name={name} onPress= {clearAllData} />
-        <WeatherWidget latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} />
+        <WeatherWidget latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} arrivalTime={arrivalTime as Date} />
         <TimeUntilArrivalWidget arrivalTime={arrivalTime as Date} />
        <Text style={styles.textCategory_flight}>{flightNumber}</Text>
         <View style={styles.wrapper}>
